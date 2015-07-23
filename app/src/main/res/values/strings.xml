@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Picker Packer</string>
+
     <string name="scan">Scan</string>
-    <string name="action_settings"/>
+    <string name="title_activity_pick">Picker Packer</string>
+    <string name="action_settings">Settings</string>
 </resources>
