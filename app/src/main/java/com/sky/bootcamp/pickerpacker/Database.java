@@ -14,7 +14,7 @@ public class Database {
     /**
      * Connection string.
      */
-    private static String url = "jdbc:postgresql://192.168.0.14/"; // DATABASE CONNECTION STRING
+    private static String url = "jdbc:postgresql://192.168.0.13/"; // DATABASE CONNECTION STRING
     /**
      * Username for database
      */

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Picker Packer</string>
+    <string name="title_activity_pick">Picker Packer</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>
