@@ -16,7 +16,7 @@
         <activity android:name=".activities.QrActivity"/>
 
         <activity
-            android:name=".PickActivity"
+            android:name=".activities.PickActivity"
             android:label="@string/title_activity_pick" >
         </activity>
     </application>

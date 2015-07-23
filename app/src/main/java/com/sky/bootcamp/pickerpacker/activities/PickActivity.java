@@ -1,17 +1,19 @@
-package com.sky.bootcamp.pickerpacker;
+package com.sky.bootcamp.pickerpacker.activities;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import com.sky.bootcamp.pickerpacker.R;
+import com.sky.bootcamp.pickerpacker.adapters.OrderLineAdapter;
 import com.sky.bootcamp.pickerpacker.models.OrderLine;
 
 import java.util.ArrayList;
 
 
-public class PickActivity extends ActionBarActivity {
+public class PickActivity extends Activity {
 
     ListView mainListView;
     OrderLineAdapter orderLineAdapter;

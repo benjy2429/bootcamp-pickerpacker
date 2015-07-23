@@ -1,4 +1,4 @@
-package com.sky.bootcamp.pickerpacker;
+package com.sky.bootcamp.pickerpacker.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.sky.bootcamp.pickerpacker.R;
 import com.sky.bootcamp.pickerpacker.models.OrderLine;
 
 import java.util.ArrayList;
