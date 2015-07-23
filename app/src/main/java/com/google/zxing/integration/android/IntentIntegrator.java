@@ -35,7 +35,7 @@ package com.google.zxing.integration.android;
         import android.os.Bundle;
         import android.util.Log;
 
-        import com.sky.bootcamp.pickerpacker.IntentResult;
+        import com.google.zxing.integration.android.IntentResult;
 
 /**
  * <p>A utility class which helps ease integration with Barcode Scanner via {@link Intent}s. This is a simple
