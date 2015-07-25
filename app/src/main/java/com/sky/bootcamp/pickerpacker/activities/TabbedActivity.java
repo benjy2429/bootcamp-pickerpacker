@@ -9,7 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.sky.bootcamp.pickerpacker.R;
 import com.sky.bootcamp.pickerpacker.SlidingTabLayout;
 import com.sky.bootcamp.pickerpacker.adapters.ViewPagerAdapter;
@@ -65,13 +68,33 @@ public class TabbedActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent scanIntent = new Intent(TabbedActivity.this, QrActivity.class);
-                startActivity(scanIntent);
+                //Intent scanIntent = new Intent(TabbedActivity.this, QrActivity.class);
+                //startActivity(scanIntent);
+
+                IntentIntegrator scanIntegrator = new IntentIntegrator(TabbedActivity.this);
+                scanIntegrator.initiateScan();
             }
         });
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+
+        if (scanningResult != null) {
+
+            String scanContent = scanningResult.getContents();
+            String scanFormat = scanningResult.getFormatName();
+            System.out.println(scanContent);
+
+        }else{
+
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "No scan data received!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
