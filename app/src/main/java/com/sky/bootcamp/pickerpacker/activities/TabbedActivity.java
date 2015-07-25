@@ -3,8 +3,8 @@ package com.sky.bootcamp.pickerpacker.activities;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +17,7 @@ import com.sky.bootcamp.pickerpacker.adapters.ViewPagerAdapter;
 /**
  * Created by bca23 on 25/07/15.
  */
-public class TabbedActivity extends ActionBarActivity {
+public class TabbedActivity extends AppCompatActivity {
 
     // Declaring Your View and Variables
 
