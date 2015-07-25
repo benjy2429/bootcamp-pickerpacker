@@ -1,9 +1,11 @@
 package com.sky.bootcamp.pickerpacker.adapters;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.sky.bootcamp.pickerpacker.R;
 import com.sky.bootcamp.pickerpacker.tabs.PackTab;
 import com.sky.bootcamp.pickerpacker.tabs.PickTab;
 
@@ -12,16 +14,16 @@ import com.sky.bootcamp.pickerpacker.tabs.PickTab;
  */
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
-    CharSequence Titles[]; // This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created
-    int NumbOfTabs; // Store the number of tabs, this will also be passed when the ViewPagerAdapter is created
+    int numOfTabs; // Store the number of tabs, this will also be passed when the ViewPagerAdapter is created
+    Context context;
 
 
     // Build a Constructor and assign the passed Values to appropriate values in the class
-    public ViewPagerAdapter(FragmentManager fm, CharSequence mTitles[], int mNumbOfTabsumb) {
+    public ViewPagerAdapter(FragmentManager fm, Context context, int mNumbOfTabsumb) {
         super(fm);
 
-        this.Titles = mTitles;
-        this.NumbOfTabs = mNumbOfTabsumb;
+        this.context = context;
+        this.numOfTabs = mNumbOfTabsumb;
 
     }
 
@@ -45,13 +47,18 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return Titles[position];
+
+        if (position == 0) {
+            return context.getString(R.string.title_section1);
+        } else {
+            return context.getString(R.string.title_section2);
+        }
     }
 
     // This method return the Number of tabs for the tabs Strip
 
     @Override
     public int getCount() {
-        return NumbOfTabs;
+        return numOfTabs;
     }
 }
