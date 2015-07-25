@@ -18,12 +18,10 @@ import java.util.ArrayList;
  */
 public class OrderLineAdapter extends BaseAdapter {
 
-    Context mContext;
     LayoutInflater mInflater;
     ArrayList<OrderLine> orders;
 
-    public OrderLineAdapter(Context context, LayoutInflater inflater) {
-        mContext = context;
+    public OrderLineAdapter(LayoutInflater inflater) {
         mInflater = inflater;
         orders = new ArrayList<OrderLine>();
     }
@@ -58,8 +56,6 @@ public class OrderLineAdapter extends BaseAdapter {
         }
 
         OrderLine order = getItem(position);
-
-        Log.d("creating new order cell",order.getProductName());
 
         holder.product_name.setText(order.getProductName());
         holder.product_barcode.setText(order.getProductBarcode());
