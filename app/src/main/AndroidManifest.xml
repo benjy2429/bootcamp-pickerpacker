@@ -12,18 +12,21 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-
         <activity
             android:name=".activities.QrActivity"
-            android:parentActivityName=".activities.TabbedActivity">
+            android:parentActivityName=".activities.TabbedActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.TabbedActivity"/>
+                android:value=".activities.TabbedActivity" />
         </activity>
-
         <activity
             android:name=".activities.TabbedActivity"
             android:label="@string/title_activity_pick" >
+        </activity>
+        <activity
+            android:name=".activities.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
     </application>
 

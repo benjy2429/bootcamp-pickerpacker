@@ -86,12 +86,12 @@ public class TabbedActivity extends AppCompatActivity {
 
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
-            System.out.println(scanContent);
+
+            Toast toast = Toast.makeText(getApplicationContext(), scanContent, Toast.LENGTH_SHORT);
+            toast.show();
 
         }else{
-
-            Toast toast = Toast.makeText(getApplicationContext(),
-                    "No scan data received!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(), "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
         }
     }
@@ -111,10 +111,18 @@ public class TabbedActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.logout) {
+            // TODO implement logout with database
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Disable the back button
     }
 }
