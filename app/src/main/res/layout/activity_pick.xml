@@ -4,11 +4,24 @@
     android:layout_height="match_parent"
     tools:context="com.sky.bootcamp.pickerpacker.PickActivity">
 
-    <ListView
-        android:id="@+id/main_listview"
+    <ViewAnimator
+        android:id="@+id/sample_output"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        />
+        android:layout_height="0px"
+        android:layout_weight="1">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:id="@+id/main_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
+
+        </ScrollView>
+    </ViewAnimator>
 
 </RelativeLayout>
