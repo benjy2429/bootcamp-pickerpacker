@@ -22,12 +22,13 @@ public class OrderLine {
 
     private static Connection conn = Database.GetConnection();
 
-    private OrderLine(String status, int quantity, int quantityPacked, int quantityPicked, int pmodelID) {
+    public OrderLine(int id, String status, int quantity, int quantityPacked, int quantityPicked, int orderID, int pmodelID) {
 
         this.status = status;
         this.quantity = quantity;
         this.quantityPacked = quantityPacked;
         this.quantityPicked = quantityPicked;
+        this.orderID = orderID;
         this.pmodelID = pmodelID;
     }
 
@@ -40,8 +41,7 @@ public class OrderLine {
 
             ArrayList<OrderLine> orderlineList = new ArrayList<OrderLine>();
             while (rs.next()) {
-
-                orderlineList.add(new OrderLine(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5)));
+                orderlineList.add(new OrderLine(rs.getInt(1),rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7)));
             }
 
             if (orderlineList.size() != 0) {

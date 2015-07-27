@@ -38,6 +38,7 @@ import java.util.List;
 
 import com.sky.bootcamp.pickerpacker.database.Database;
 import com.sky.bootcamp.pickerpacker.R;
+import com.sky.bootcamp.pickerpacker.models.User;
 
 /**
  * A login screen that offers login via email/password.
@@ -283,32 +284,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            try {
-                Connection c = Database.GetConnection();
-                Statement stmt = c.createStatement();
-                String queryString = "SELECT * FROM profiles_person";
-                ResultSet rs = stmt.executeQuery(queryString);
-                ResultSetMetaData rsmd = rs.getMetaData();
-                int columnCount = rsmd.getColumnCount();
+            User[] users = User.ListAll();
 
-                for (int i = 1; i < columnCount + 1; i++ ) {
-                    String name = rsmd.getColumnName(i);
-                    System.out.println("Column " + i + ": " + name);
-                }
-
-            } catch (Exception e) {
-                System.out.println("Fatal: " + e.getMessage());
-                System.out.println(e.getCause());
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
 
             // TODO: register the new account here.
             return true;

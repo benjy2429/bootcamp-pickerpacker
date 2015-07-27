@@ -55,11 +55,6 @@ public class OrderLineAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        OrderLine order = getItem(position);
-
-        holder.product_name.setText(order.getProductName());
-        holder.product_barcode.setText(order.getProductBarcode());
-
         return convertView;
     }
 

@@ -22,19 +22,19 @@ public class PickTab extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         ArrayList<OrderLine> testOrders = new ArrayList<>();
-        testOrders.add(new OrderLine("iPhone 6", "123456789"));
-        testOrders.add(new OrderLine("iPhone 7", "235326"));
-        testOrders.add(new OrderLine("iPhone 8", "5786585689"));
-        testOrders.add(new OrderLine("iPhone 9", "6735735"));
-        testOrders.add(new OrderLine("iPhone 10", "24562546"));
-        testOrders.add(new OrderLine("iPhone 6", "123456789"));
-        testOrders.add(new OrderLine("iPhone 7", "235326"));
-        testOrders.add(new OrderLine("iPhone 8", "5786585689"));
-        testOrders.add(new OrderLine("iPhone 9", "6735735"));
-        testOrders.add(new OrderLine("iPhone 10", "24562546"));
+        //testOrders.add(new OrderLine("iPhone 6", "123456789"));
+        //testOrders.add(new OrderLine("iPhone 7", "235326"));
+        //testOrders.add(new OrderLine("iPhone 8", "5786585689"));
+        //testOrders.add(new OrderLine("iPhone 9", "6735735"));
+        //testOrders.add(new OrderLine("iPhone 10", "24562546"));
+        //testOrders.add(new OrderLine("iPhone 6", "123456789"));
+        //testOrders.add(new OrderLine("iPhone 7", "235326"));
+        //testOrders.add(new OrderLine("iPhone 8", "5786585689"));
+        //testOrders.add(new OrderLine("iPhone 9", "6735735"));
+        //testOrders.add(new OrderLine("iPhone 10", "24562546"));
 
         orderLineAdapter = new OrderLineAdapter(inflater);
-        orderLineAdapter.updateData(testOrders);
+        //orderLineAdapter.updateData(testOrders);
 
         setListAdapter(orderLineAdapter);
 
