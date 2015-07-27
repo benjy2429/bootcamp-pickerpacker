@@ -16,15 +16,23 @@ public class OrderLine {
     private int quantityPacked;
     private int quantityPicked;
     private int orderID;
-    private int pmodelID;
+    private PModel pmodel;
 
-    public OrderLine(int id, String status, int quantity, int quantityPacked, int quantityPicked, int orderID, int pmodelID) {
+    public OrderLine(int id, String status, int quantity, int quantityPacked, int quantityPicked, int orderID, PModel pmodel) {
 
         this.status = status;
         this.quantity = quantity;
         this.quantityPacked = quantityPacked;
         this.quantityPicked = quantityPicked;
         this.orderID = orderID;
-        this.pmodelID = pmodelID;
+        this.pmodel = pmodel;
+    }
+
+    public String getName() {
+        return this.pmodel.getProduct().getName();
+    }
+
+    public String getBarcode() {
+        return this.pmodel.getBarcode();
     }
 }
