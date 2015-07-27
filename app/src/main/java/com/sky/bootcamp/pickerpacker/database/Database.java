@@ -1,4 +1,4 @@
-package com.sky.bootcamp.pickerpacker;
+package com.sky.bootcamp.pickerpacker.database;
 
 /**
  * Created by mgh01 on 22/07/2015.

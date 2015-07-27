@@ -16,6 +16,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.sky.bootcamp.pickerpacker.R;
 import com.sky.bootcamp.pickerpacker.SlidingTabLayout;
 import com.sky.bootcamp.pickerpacker.adapters.ViewPagerAdapter;
+import com.sky.bootcamp.pickerpacker.models.OrderLine;
 
 /**
  * Created by bca23 on 25/07/15.
@@ -28,7 +29,7 @@ public class TabbedActivity extends AppCompatActivity {
     ViewPager pager;
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
-    int numOfTabs =2;
+    int numOfTabs = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
