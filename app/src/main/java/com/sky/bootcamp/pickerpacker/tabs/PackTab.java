@@ -14,9 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by bca23 on 25/07/15.
  */
-public class PackTab extends ListFragment {
-
-    OrderLineAdapter orderLineAdapter;
+public class PackTab extends MasterTab {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
