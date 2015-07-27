@@ -29,9 +29,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sky.bootcamp.pickerpacker.database.Database;
 import com.sky.bootcamp.pickerpacker.R;
 
 /**
@@ -89,10 +94,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             public void onClick(View view) {
 
                 // TODO implement login with database
-                //attemptLogin();
+                attemptLogin();
 
-                Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
+                //startActivity(intent);
 
             }
         });
@@ -127,6 +132,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         boolean cancel = false;
         View focusView = null;
 
+        /*
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
@@ -144,6 +150,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView = mEmailView;
             cancel = true;
         }
+        */
 
         if (cancel) {
             // There was an error; don't attempt login and focus the first
@@ -277,9 +284,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // TODO: attempt authentication against a network service.
 
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
+                Connection c = Database.GetConnection();
+                Statement stmt = c.createStatement();
+                String queryString = "SELECT * FROM profiles_person";
+                ResultSet rs = stmt.executeQuery(queryString);
+                ResultSetMetaData rsmd = rs.getMetaData();
+                int columnCount = rsmd.getColumnCount();
+
+                for (int i = 1; i < columnCount + 1; i++ ) {
+                    String name = rsmd.getColumnName(i);
+                    System.out.println("Column " + i + ": " + name);
+                }
+
+            } catch (Exception e) {
+                System.out.println("Fatal: " + e.getMessage());
+                System.out.println(e.getCause());
                 return false;
             }
 
