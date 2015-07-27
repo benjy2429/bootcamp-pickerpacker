@@ -3,11 +3,8 @@ package com.sky.bootcamp.pickerpacker.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
-import android.content.ContentResolver;
 import android.content.CursorLoader;
-import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -18,7 +15,6 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,16 +25,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sky.bootcamp.pickerpacker.database.Database;
+
 import com.sky.bootcamp.pickerpacker.R;
 import com.sky.bootcamp.pickerpacker.models.User;
+import com.sky.bootcamp.pickerpacker.helpers.LoginHelper;
+
 
 /**
  * A login screen that offers login via email/password.
@@ -94,8 +88,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View view) {
 
+                try {
+                    System.out.println(LoginHelper.passwordCorrect("password", "pbkdf2_sha256$20000$wlW7Po1nm1DW$nt9LYWbxwvHIXmyBGUQG7NyPDkrt/2fivN3wsHzLnks="));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 // TODO implement login with database
-                attemptLogin();
+                //attemptLogin();
 
                 //Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
                 //startActivity(intent);

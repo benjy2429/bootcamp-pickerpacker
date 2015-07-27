@@ -1,9 +1,5 @@
 package com.sky.bootcamp.pickerpacker.models;
 
-import com.sky.bootcamp.pickerpacker.database.Database;
-
-import java.sql.Connection;
-
 /**
  * Created by mgh01 on 27/07/2015.
  */
@@ -18,8 +14,6 @@ public class Address {
     private String country;
     private String postcode;
     private int userID;
-
-    private static Connection conn = Database.GetConnection();
 
     public Address(int id, String addressLine1,String addressLine2, String addressLine3, String city, String county, String country, String postcode, int userID){
         this.id = id;
