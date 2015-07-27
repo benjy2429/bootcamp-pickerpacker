@@ -3,11 +3,8 @@ package com.sky.bootcamp.pickerpacker.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
-import android.content.ContentResolver;
 import android.content.CursorLoader;
-import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -18,7 +15,6 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,16 +25,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sky.bootcamp.pickerpacker.database.Database;
+
 import com.sky.bootcamp.pickerpacker.R;
+import com.sky.bootcamp.pickerpacker.models.User;
 import com.sky.bootcamp.pickerpacker.helpers.LoginHelper;
+
 
 /**
  * A login screen that offers login via email/password.
@@ -290,32 +284,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            try {
-                Connection c = Database.GetConnection();
-                Statement stmt = c.createStatement();
-                String queryString = "SELECT * FROM profiles_person";
-                ResultSet rs = stmt.executeQuery(queryString);
-                ResultSetMetaData rsmd = rs.getMetaData();
-                int columnCount = rsmd.getColumnCount();
+            User[] users = User.ListAll();
 
-                for (int i = 1; i < columnCount + 1; i++ ) {
-                    String name = rsmd.getColumnName(i);
-                    System.out.println("Column " + i + ": " + name);
-                }
-
-            } catch (Exception e) {
-                System.out.println("Fatal: " + e.getMessage());
-                System.out.println(e.getCause());
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
 
             // TODO: register the new account here.
             return true;

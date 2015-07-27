@@ -65,19 +65,16 @@ public class User {
                 userList.add(new User(rs.getInt(1),rs.getString(2), rs.getTimestamp(3), rs.getBoolean(4), rs.getString(5), rs.getString(6),rs.getString(7),rs.getString(8),rs.getBoolean(9), rs.getBoolean(10), rs.getTimestamp(11)));
             }
 
+            System.out.println(userList.size());
+
             if (userList.size() != 0) {
                 return userList
                         .toArray(new User[userList.size()]);
             }
         } catch (Exception e) {
-
+            System.out.println(e.getMessage());
         }
         return null;
-    }
-
-    public void Test(){
-        User[] users = ListAll();
-        System.out.println(users.length);
     }
 }
 
