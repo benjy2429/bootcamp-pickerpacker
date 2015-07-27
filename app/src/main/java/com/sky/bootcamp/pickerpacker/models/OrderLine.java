@@ -12,6 +12,10 @@ import java.util.ArrayList;
  */
 public class OrderLine {
 
+    //TODO REMOVE THESE INVALID FIELDS
+    private String productName;
+    private String productBarcode;
+
     private int id;
     private String status;
     private int quantity;
@@ -54,4 +58,17 @@ public class OrderLine {
         return null;
     }
 
+    // TODO REMOVE THE FOLLOWING METHODS
+    public OrderLine(String name, String barcode) {
+        this.productName = name;
+        this.productBarcode = barcode;
+    }
+
+    public String getProductBarcode() {
+        return productBarcode;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
 }
