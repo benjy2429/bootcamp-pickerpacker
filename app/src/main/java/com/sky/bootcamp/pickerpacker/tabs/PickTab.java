@@ -13,8 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.sky.bootcamp.pickerpacker.adapters.OrderLineAdapter;
+import com.sky.bootcamp.pickerpacker.database.OrderLineDao;
 import com.sky.bootcamp.pickerpacker.models.OrderLine;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,20 +28,11 @@ public class PickTab extends MasterTab {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        ArrayList<OrderLine> testOrders = new ArrayList<>();
-        //testOrders.add(new OrderLine("iPhone 6", "123456789"));
-        //testOrders.add(new OrderLine("iPhone 7", "235326"));
-        //testOrders.add(new OrderLine("iPhone 8", "5786585689"));
-        //testOrders.add(new OrderLine("iPhone 9", "6735735"));
-        //testOrders.add(new OrderLine("iPhone 10", "24562546"));
-        //testOrders.add(new OrderLine("iPhone 6", "123456789"));
-        //testOrders.add(new OrderLine("iPhone 7", "235326"));
-        //testOrders.add(new OrderLine("iPhone 8", "5786585689"));
-        //testOrders.add(new OrderLine("iPhone 9", "6735735"));
-        //testOrders.add(new OrderLine("iPhone 10", "24562546"));
-
         orderLineAdapter = new OrderLineAdapter(inflater);
-        //orderLineAdapter.updateData(testOrders);
+
+        // Get some orderlines
+        // TODO FIX BROKEN DAO
+        //orderLineAdapter.updateData(OrderLineDao.getOrderLines());
 
         setListAdapter(orderLineAdapter);
 
