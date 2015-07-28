@@ -63,9 +63,9 @@ public class DatabaseAccessLayer {
                 int quantityPacked = rs.getInt("quantity_packed");
                 int quantityPicked = rs.getInt("quantity_picked");
                 int orderID = rs.getInt("order_id_id");
-                PModel pmodel = null;
 
-                OrderLine orderline = new OrderLine(id, status, quantity, quantityPacked, quantityPicked, orderID, pmodel);
+
+                OrderLine orderline = new OrderLine(id, status, quantity, quantityPacked, quantityPicked, orderID, status, "asdsrfwe");
                 results.add(orderline);
             }
         } catch (SQLException e) {

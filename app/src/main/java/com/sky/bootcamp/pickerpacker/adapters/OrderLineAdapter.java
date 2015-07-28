@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.sky.bootcamp.pickerpacker.R;
+import com.sky.bootcamp.pickerpacker.controllers.Tabbed;
 import com.sky.bootcamp.pickerpacker.models.OrderLine;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class OrderLineAdapter extends BaseAdapter {
     public OrderLineAdapter(LayoutInflater inflater) {
         mInflater = inflater;
         orders = new ArrayList<OrderLine>();
+        orders.addAll(Tabbed.getOrderline(orders));
     }
 
     @Override

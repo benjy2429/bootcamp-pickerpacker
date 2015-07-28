@@ -16,23 +16,25 @@ public class OrderLine {
     private int quantityPacked;
     private int quantityPicked;
     private int orderID;
-    private PModel pmodel;
+    private String productName;
+    private String barcode;
 
-    public OrderLine(int id, String status, int quantity, int quantityPacked, int quantityPicked, int orderID, PModel pmodel) {
+    public OrderLine(int id, String status, int quantity, int quantityPacked, int quantityPicked, int orderID, String productName, String barcode) {
 
         this.status = status;
         this.quantity = quantity;
         this.quantityPacked = quantityPacked;
         this.quantityPicked = quantityPicked;
         this.orderID = orderID;
-        this.pmodel = pmodel;
+        this.productName = productName;
+        this.barcode = barcode;
     }
 
     public String getName() {
-        return this.pmodel.getProduct().getName();
+        return productName;
     }
 
     public String getBarcode() {
-        return this.pmodel.getBarcode();
+        return barcode;
     }
 }
