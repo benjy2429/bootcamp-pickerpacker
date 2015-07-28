@@ -25,7 +25,7 @@ public class OrderLineAdapter extends BaseAdapter {
     public OrderLineAdapter(LayoutInflater inflater) {
         mInflater = inflater;
         orders = new ArrayList<OrderLine>();
-        orders.addAll(Tabbed.getOrderline(orders));
+        orders.addAll(Tabbed.getOrderline(orders, "Pending"));
     }
 
     @Override

@@ -9,18 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import com.sky.bootcamp.pickerpacker.models.OrderLine;
-import com.sky.bootcamp.pickerpacker.models.PModel;
-import com.sky.bootcamp.pickerpacker.models.User;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
-
 
 /**
  * Created by mgh01 on 27/07/2015.
@@ -48,13 +40,16 @@ public class DatabaseAccessLayer {
         return user;
     }
 
-    public static ArrayList<OrderLine> getOrderLines() {
+    public static ArrayList<OrderLine> getOrderLines(String filter) {
         ArrayList<OrderLine> results = new ArrayList<OrderLine>();
 
         try {
             Connection c = Database.GetConnection();
             Statement stmt = c.createStatement();
-            String queryString = "SELECT * FROM profiles_orderline";
+            String queryString = "SELECT * FROM profiles_orderline INNER JOIN plans_pmodel ON profiles_orderline.pmodel_id_id = plans_pmodel.id INNER JOIN plans_product ON plans_pmodel.product_id_id = plans_product.id WHERE status=? LIMIT 10";
+            PreparedStatement ps = c.prepareStatement(queryString);
+            ps.setString(1, filter);
+
             ResultSet rs = stmt.executeQuery(queryString);
             while (rs.next()) {
                 int id = rs.getInt("id");
@@ -63,9 +58,10 @@ public class DatabaseAccessLayer {
                 int quantityPacked = rs.getInt("quantity_packed");
                 int quantityPicked = rs.getInt("quantity_picked");
                 int orderID = rs.getInt("order_id_id");
+                String barcode = rs.getString("barcode");
+                String productName=rs.getString("name");
 
-
-                OrderLine orderline = new OrderLine(id, status, quantity, quantityPacked, quantityPicked, orderID, status, "asdsrfwe");
+                OrderLine orderline = new OrderLine(id, status, quantity, quantityPacked, quantityPicked, orderID, productName, barcode);
                 results.add(orderline);
             }
         } catch (SQLException e) {

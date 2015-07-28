@@ -13,15 +13,15 @@ import java.util.ArrayList;
  */
 public class Tabbed {
 
-    public static ArrayList<OrderLine> getOrderline(){
-        return DatabaseAccessLayer.getOrderLines();
+    public static ArrayList<OrderLine> getOrderline(String filter){
+        return DatabaseAccessLayer.getOrderLines(filter);
     }
 
-    public static ArrayList<OrderLine> getOrderline(final ArrayList<OrderLine> orders){
+    public static ArrayList<OrderLine> getOrderline(final ArrayList<OrderLine> orders, final String filter){
         new AsyncTask<Void, Void, Void>(){
             @Override
             protected Void doInBackground(Void... params) {
-                orders.addAll(getOrderline());
+                orders.addAll(getOrderline(filter));
                 return null;
             }
         }.execute();

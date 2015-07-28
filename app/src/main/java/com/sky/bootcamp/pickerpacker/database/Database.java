@@ -16,7 +16,7 @@ public class Database {
     /**
      * Connection string.
      */
-    private static String url = "jdbc:postgresql://192.168.1.13/bootcamp"; // DATABASE CONNECTION STRING
+    private static String url = "jdbc:postgresql://192.168.1.18/bootcamp"; // DATABASE CONNECTION STRING
     /**
      * Username for database
      */
@@ -63,8 +63,8 @@ public class Database {
             else
                 System.out.println("FAIL");
         }catch(Exception e){
-            System.out.println("Fatal: " + e.getMessage());
-            System.out.println(e.getCause());
+            System.err.println("Fatal: " + e.getMessage());
+            System.err.println(e.getCause());
         }
     }
 
