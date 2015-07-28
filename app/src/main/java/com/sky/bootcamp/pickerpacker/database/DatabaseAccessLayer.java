@@ -45,12 +45,11 @@ public class DatabaseAccessLayer {
 
         try {
             Connection c = Database.GetConnection();
-            Statement stmt = c.createStatement();
-            String queryString = "SELECT * FROM profiles_orderline INNER JOIN plans_pmodel ON profiles_orderline.pmodel_id_id = plans_pmodel.id INNER JOIN plans_product ON plans_pmodel.product_id_id = plans_product.id WHERE status=? LIMIT 10";
+            String queryString = "SELECT * FROM profiles_orderline INNER JOIN plans_pmodel ON profiles_orderline.pmodel_id_id = plans_pmodel.id INNER JOIN plans_product ON plans_pmodel.product_id_id = plans_product.id WHERE profiles_orderline.status = ? LIMIT 10";
             PreparedStatement ps = c.prepareStatement(queryString);
             ps.setString(1, filter);
+            ResultSet rs = ps.executeQuery();
 
-            ResultSet rs = stmt.executeQuery(queryString);
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String status = rs.getString("status");
@@ -59,7 +58,7 @@ public class DatabaseAccessLayer {
                 int quantityPicked = rs.getInt("quantity_picked");
                 int orderID = rs.getInt("order_id_id");
                 String barcode = rs.getString("barcode");
-                String productName=rs.getString("name");
+                String productName = rs.getString("name");
 
                 OrderLine orderline = new OrderLine(id, status, quantity, quantityPacked, quantityPicked, orderID, productName, barcode);
                 results.add(orderline);

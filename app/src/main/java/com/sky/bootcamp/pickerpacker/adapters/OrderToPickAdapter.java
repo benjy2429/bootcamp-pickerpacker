@@ -17,12 +17,12 @@ import java.util.ArrayList;
 /**
  * Created by bca23 on 23/07/15.
  */
-public class OrderLineAdapter extends BaseAdapter {
+public class OrderToPickAdapter extends BaseAdapter {
 
     LayoutInflater mInflater;
     ArrayList<OrderLine> orders;
 
-    public OrderLineAdapter(LayoutInflater inflater) {
+    public OrderToPickAdapter(LayoutInflater inflater) {
         mInflater = inflater;
         orders = new ArrayList<OrderLine>();
         orders.addAll(Tabbed.getOrderline(orders, "Pending"));

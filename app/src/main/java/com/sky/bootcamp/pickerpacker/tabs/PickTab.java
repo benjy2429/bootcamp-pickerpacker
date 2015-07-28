@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sky.bootcamp.pickerpacker.adapters.OrderLineAdapter;
+import com.sky.bootcamp.pickerpacker.adapters.OrderToPickAdapter;
 import com.sky.bootcamp.pickerpacker.controllers.Tabbed;
 import com.sky.bootcamp.pickerpacker.models.OrderLine;
 
@@ -18,12 +18,13 @@ import java.util.ArrayList;
  */
 public class PickTab extends MasterTab {
 
+    private OrderToPickAdapter adapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        orderLineAdapter = new OrderLineAdapter(inflater);
-
-        setListAdapter(orderLineAdapter);
+        adapter = new OrderToPickAdapter(inflater);
+        setListAdapter(adapter);
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -37,7 +38,7 @@ public class PickTab extends MasterTab {
         @Override
         protected ArrayList<OrderLine> doInBackground(Void... params) {
 
-            ArrayList<OrderLine> orders = Tabbed.getOrderline();
+            ArrayList<OrderLine> orders = Tabbed.getOrderline("Pending");
             return orders;
         }
 
@@ -49,7 +50,7 @@ public class PickTab extends MasterTab {
                 Log.e("Refresh Data", "An error occurred getting the latest data");
             }
 
-            orderLineAdapter.updateData(orders);
+            adapter.updateData(orders);
 
             onRefreshComplete();
         }
