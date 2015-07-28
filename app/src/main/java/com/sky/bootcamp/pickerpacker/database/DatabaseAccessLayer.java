@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by mgh01 on 27/07/2015.
@@ -22,7 +21,7 @@ public class DatabaseAccessLayer {
         User user = null;
 
         Connection con = Database.GetConnection();
-        String queryString = "SELECT * FROM auth_user WHERE email = ? LIMIT 1";
+        String queryString = "SELECT * FROM auth_user INNER JOIN profiles_person ON profiles_person.user_id = auth_user.id WHERE auth_user.email = ? LIMIT 1";
         PreparedStatement ps = con.prepareStatement(queryString);
         ps.setString(1, email);
         ResultSet rs = ps.executeQuery();
@@ -30,7 +29,8 @@ public class DatabaseAccessLayer {
         if (rs.next()) {
             String password = rs.getString("password");
             Timestamp lastLogin = rs.getTimestamp("last_login");
-            user = new User(email, password, lastLogin);
+            String role = rs.getString("role");
+            user = new User(email, password, lastLogin, role);
         }
 
         return user;

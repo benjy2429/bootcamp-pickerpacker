@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -265,15 +265,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             try {
                 user = DatabaseAccessLayer.getUserFromEmail(mEmail);
 
+                // Check if a matching user was found
                 if (user == null) {
-                    errMsg = "This email does not belong to any accounts.";
+                    errMsg = "The email or password is incorrect";
                     return user;
                 }
 
+                // Check if the password is correct
                 if (!LoginHelper.passwordCorrect(mPassword, user.getPassword())) {
-                    errMsg = "The password is incorrect";
+                    errMsg = "The email or password is incorrect";
                     return user;
                 }
+
+                // Check if the user has the correct role
+                if (!user.getRole().equals(User.VALID_ROLE)) {
+                    errMsg = "This account is not authorised to use this app.";
+                    return user;
+                }
+
             } catch (SQLException | UnsupportedEncodingException e) {
                 errMsg = "An error has occurred. Please try again later.";
                 Log.e("Database Connection", e.getMessage());
