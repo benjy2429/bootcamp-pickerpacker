@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,7 +17,11 @@ import com.google.zxing.integration.android.IntentResult;
 import com.sky.bootcamp.pickerpacker.R;
 import com.sky.bootcamp.pickerpacker.SlidingTabLayout;
 import com.sky.bootcamp.pickerpacker.adapters.ViewPagerAdapter;
+import com.sky.bootcamp.pickerpacker.controllers.Tabbed;
+import com.sky.bootcamp.pickerpacker.database.DatabaseAccessLayer;
 import com.sky.bootcamp.pickerpacker.models.OrderLine;
+
+import java.sql.SQLException;
 
 /**
  * Created by bca23 on 25/07/15.
@@ -86,12 +91,9 @@ public class TabbedActivity extends AppCompatActivity {
         if (scanningResult != null) {
 
             String scanContent = scanningResult.getContents();
-            String scanFormat = scanningResult.getFormatName();
+            Tabbed.getOrderLineByBarcode(scanContent);
 
-            Toast toast = Toast.makeText(getApplicationContext(), scanContent, Toast.LENGTH_SHORT);
-            toast.show();
-
-        }else{
+        } else {
             Toast toast = Toast.makeText(getApplicationContext(), "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
         }

@@ -1,11 +1,16 @@
 package com.sky.bootcamp.pickerpacker.controllers;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.sky.bootcamp.pickerpacker.database.DatabaseAccessLayer;
 import com.sky.bootcamp.pickerpacker.models.OrderLine;
+import com.sky.bootcamp.pickerpacker.models.User;
 
 import java.lang.reflect.Array;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -29,6 +34,24 @@ public class Tabbed {
         return orders;
     }
 
+    public static void getOrderLineByBarcode(final String barcode) {
 
+        new AsyncTask<Void, Void, String>() {
+
+            @Override
+            protected String doInBackground(Void... params) {
+                String errMsg = "";
+                try {
+                    OrderLine orderline = DatabaseAccessLayer.getOrderLineByBarcode(barcode);
+                    System.out.println(orderline.getName());
+                } catch (SQLException e) {
+                    errMsg = "An error has occurred. Please try again later.";
+                    Log.e("Database Connection", e.getMessage());
+                }
+                return errMsg;
+            }
+
+        }.execute();
+    }
 
 }

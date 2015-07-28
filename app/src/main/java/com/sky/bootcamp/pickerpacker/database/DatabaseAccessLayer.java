@@ -75,4 +75,28 @@ public class DatabaseAccessLayer {
         return results;
     }
 
+    public static OrderLine getOrderLineByBarcode(String barcode) throws SQLException {
+        OrderLine orderline = null;
+
+        Connection con = Database.GetConnection();
+        String queryString = "SELECT * FROM profiles_orderline INNER JOIN plans_pmodel ON profiles_orderline.pmodel_id_id = plans_pmodel.id INNER JOIN plans_product ON plans_pmodel.product_id_id = plans_product.id WHERE plans_pmodel.barcode = ? LIMIT 1";
+        PreparedStatement ps = con.prepareStatement(queryString);
+        ps.setString(1, barcode);
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            int id = rs.getInt("id");
+            String status = rs.getString("status");
+            int quantity = rs.getInt("quantity");
+            int quantityPacked = rs.getInt("quantity_packed");
+            int quantityPicked = rs.getInt("quantity_picked");
+            int orderID = rs.getInt("order_id_id");
+            String productName = rs.getString("name");
+
+            orderline = new OrderLine(id, status, quantity, quantityPacked, quantityPicked, orderID, productName, barcode);
+        }
+
+        return orderline;
+    }
+
 }
