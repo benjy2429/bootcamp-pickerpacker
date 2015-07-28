@@ -1,5 +1,7 @@
 package com.sky.bootcamp.pickerpacker.database;
 
+import android.util.Log;
+
 import com.sky.bootcamp.pickerpacker.models.User;
 
 import java.sql.Connection;
@@ -49,11 +51,9 @@ public class DatabaseAccessLayer {
     public static ArrayList<OrderLine> getOrderLines() {
         ArrayList<OrderLine> results = new ArrayList<OrderLine>();
 
-        Connection c = null;
-        Statement stmt = null;
         try {
-            c = Database.GetConnection();
-            stmt = c.createStatement();
+            Connection c = Database.GetConnection();
+            Statement stmt = c.createStatement();
             String queryString = "SELECT * FROM profiles_orderline";
             ResultSet rs = stmt.executeQuery(queryString);
             while (rs.next()) {
@@ -69,14 +69,7 @@ public class DatabaseAccessLayer {
                 results.add(orderline);
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        } finally {
-            try {
-                if (stmt != null) { stmt.close(); }
-                if (c != null) { c.close(); }
-            } catch (SQLException e) {
-                System.out.println(e.getMessage());
-            }
+            Log.e("OrderLine db connection", e.getMessage());
         }
 
         return results;
