@@ -45,9 +45,14 @@ public class DatabaseAccessLayer {
 
         try {
             Connection c = Database.GetConnection();
-            String queryString = "SELECT * FROM profiles_orderline INNER JOIN plans_pmodel ON profiles_orderline.pmodel_id_id = plans_pmodel.id INNER JOIN plans_product ON plans_pmodel.product_id_id = plans_product.id WHERE profiles_orderline.status = ? LIMIT 10";
+            String queryString = "SELECT * FROM profiles_orderline INNER JOIN plans_pmodel ON profiles_orderline.pmodel_id_id = plans_pmodel.id INNER JOIN plans_product ON plans_pmodel.product_id_id = plans_product.id";
+            if (filter.equals("Pending")) {
+                queryString += " WHERE profiles_orderline.quantity > 0";
+            } else if (filter.equals("Picked")) {
+                queryString += " WHERE profiles_orderline.quantity_picked > 0";
+            }
+            queryString += " LIMIT 10";
             PreparedStatement ps = c.prepareStatement(queryString);
-            ps.setString(1, filter);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {

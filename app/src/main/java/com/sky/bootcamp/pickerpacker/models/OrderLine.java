@@ -37,4 +37,12 @@ public class OrderLine {
     public String getBarcode() {
         return barcode;
     }
+
+    public int getQuantity() {
+        return this.quantity;
+    }
+
+    public int getQuantityPicked() {
+        return this.quantityPicked;
+    }
 }

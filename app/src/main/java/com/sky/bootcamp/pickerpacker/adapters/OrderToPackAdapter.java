@@ -50,6 +50,7 @@ public class OrderToPackAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.product_name= (TextView) convertView.findViewById(R.id.text_product_name);
             holder.product_barcode= (TextView) convertView.findViewById(R.id.text_product_barcode);
+            holder.product_quantity= (TextView) convertView.findViewById(R.id.text_product_quantity);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -58,6 +59,7 @@ public class OrderToPackAdapter extends BaseAdapter {
         OrderLine orderline = getItem(position);
         holder.product_name.setText(orderline.getName());
         holder.product_barcode.setText(orderline.getBarcode());
+        holder.product_quantity.setText("Quantity: " + orderline.getQuantityPicked());
 
         return convertView;
     }
@@ -65,6 +67,7 @@ public class OrderToPackAdapter extends BaseAdapter {
     private static class ViewHolder {
         public TextView product_name;
         public TextView product_barcode;
+        public TextView product_quantity;
     }
 
     public void updateData(ArrayList<OrderLine> newOrders) {
