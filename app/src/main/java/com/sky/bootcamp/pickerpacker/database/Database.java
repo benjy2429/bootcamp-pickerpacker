@@ -3,6 +3,8 @@ package com.sky.bootcamp.pickerpacker.database;
 /**
  * Created by mgh01 on 22/07/2015.
  */
+import android.os.StrictMode;
+
 import java.sql.*;
 import java.util.concurrent.*;
 
@@ -14,7 +16,7 @@ public class Database {
     /**
      * Connection string.
      */
-    private static String url = "jdbc:postgresql://192.168.1.18/bootcamp"; // DATABASE CONNECTION STRING
+    private static String url = "jdbc:postgresql://192.168.1.13/bootcamp"; // DATABASE CONNECTION STRING
     /**
      * Username for database
      */
@@ -32,7 +34,7 @@ public class Database {
             Database.conn = DriverManager.getConnection(Database.url, Database.user, Database.pass);
         }
         catch (ClassNotFoundException ex) {System.err.println("ClassNotFoundException: " + ex.getMessage());}
-        catch (SQLException ex)           {System.err.println("SQLException: " + ex.getMessage());}
+        catch (SQLException ex)           {System.err.println("SQLException: " + ex.getMessage()); ex.printStackTrace();}
 
     }
 

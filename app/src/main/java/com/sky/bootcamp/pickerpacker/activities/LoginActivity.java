@@ -25,11 +25,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 
 import com.sky.bootcamp.pickerpacker.R;
+import com.sky.bootcamp.pickerpacker.database.DatabaseAccessLayer;
 import com.sky.bootcamp.pickerpacker.models.User;
 import com.sky.bootcamp.pickerpacker.helpers.LoginHelper;
 
@@ -88,17 +90,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View view) {
 
-                try {
-                    System.out.println(LoginHelper.passwordCorrect("password", "pbkdf2_sha256$20000$wlW7Po1nm1DW$nt9LYWbxwvHIXmyBGUQG7NyPDkrt/2fivN3wsHzLnks="));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
                 // TODO implement login with database
-                //attemptLogin();
+                attemptLogin();
 
-                //Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
-                //startActivity(intent);
+//                try {
+//                    System.out.println(LoginHelper.passwordCorrect("password", "pbkdf2_sha256$20000$wlW7Po1nm1DW$nt9LYWbxwvHIXmyBGUQG7NyPDkrt/2fivN3wsHzLnks="));
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
 
             }
         });
@@ -284,7 +283,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
 
-            User[] users = User.ListAll();
+            User user = null;
+            try {
+                user = DatabaseAccessLayer.getUserFromEmail(mEmail);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            System.out.println(user.getPassword());
 
 
             // TODO: register the new account here.
@@ -297,7 +302,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                finish();
+                Intent intent = new Intent(LoginActivity.this, TabbedActivity.class);
+                startActivity(intent);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
