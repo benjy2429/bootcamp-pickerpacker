@@ -20,29 +20,17 @@ public class DatabaseAccessLayer {
 
     public static User getUserFromEmail(String email) throws SQLException {
         User user = null;
-        Connection con = null;
-        PreparedStatement ps = null;
 
-        try {
-            con = Database.GetConnection();
-            String queryString = "SELECT * FROM auth_user LIMIT 1";
-            ps = con.prepareStatement(queryString);
-            ResultSet rs = ps.executeQuery();
+        Connection con = Database.GetConnection();
+        String queryString = "SELECT * FROM auth_user WHERE email = ? LIMIT 1";
+        PreparedStatement ps = con.prepareStatement(queryString);
+        ps.setString(1, email);
+        ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
-                String password = rs.getString("password");
-                Timestamp lastLogin = rs.getTimestamp("last_login");
-                user = new User(email, password, lastLogin);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (ps != null) {
-                ps.close();
-            }
-            if (con != null) {
-                con.close();
-            }
+        if (rs.next()) {
+            String password = rs.getString("password");
+            Timestamp lastLogin = rs.getTimestamp("last_login");
+            user = new User(email, password, lastLogin);
         }
 
         return user;
