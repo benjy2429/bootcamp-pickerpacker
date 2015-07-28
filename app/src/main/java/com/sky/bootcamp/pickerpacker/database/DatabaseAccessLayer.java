@@ -1,13 +1,11 @@
 package com.sky.bootcamp.pickerpacker.database;
 
-<<<<<<< HEAD
 import com.sky.bootcamp.pickerpacker.models.User;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-=======
 import com.sky.bootcamp.pickerpacker.models.OrderLine;
 import com.sky.bootcamp.pickerpacker.models.PModel;
 import com.sky.bootcamp.pickerpacker.models.User;
@@ -20,7 +18,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
->>>>>>> bc286c76ebd936a62c5bbaf5b9dbf36150eab021
+
 
 /**
  * Created by mgh01 on 27/07/2015.
@@ -31,29 +29,18 @@ public class DatabaseAccessLayer {
 
     public static User getUserFromEmail(String email) throws SQLException {
         User user = null;
-        Connection con = null;
-        PreparedStatement ps = null;
 
-        try {
-            con = Database.GetConnection();
-            String queryString = "SELECT * FROM auth_user LIMIT 1";
-            ps = con.prepareStatement(queryString);
-            ResultSet rs = ps.executeQuery();
+        Connection con = Database.GetConnection();
+        String queryString = "SELECT * FROM auth_user INNER JOIN profiles_person ON profiles_person.user_id = auth_user.id WHERE auth_user.email = ? LIMIT 1";
+        PreparedStatement ps = con.prepareStatement(queryString);
+        ps.setString(1, email);
+        ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
-                String password = rs.getString("password");
-                Timestamp lastLogin = rs.getTimestamp("last_login");
-                user = new User(email, password, lastLogin);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (ps != null) {
-                ps.close();
-            }
-            if (con != null) {
-                con.close();
-            }
+        if (rs.next()) {
+            String password = rs.getString("password");
+            Timestamp lastLogin = rs.getTimestamp("last_login");
+            String role = rs.getString("role");
+            user = new User(email, password, lastLogin, role);
         }
 
         return user;

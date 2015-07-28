@@ -23,10 +23,6 @@ public class LoginHelper {
         String storedHash = parts[3];
         String calculatedHash = getEncodedHash(enteredPassword, salt);
 
-        System.out.println(storedHash);
-        System.out.println(calculatedHash);
-
-        //I just return this
         return storedHash.equals(calculatedHash);
     }
 
