@@ -76,7 +76,7 @@ public class MasterTab extends ListFragment {
     }
 
     protected void initiateRefresh() {
-        new DummyBackgroundTask().execute();
+
     }
 
 
