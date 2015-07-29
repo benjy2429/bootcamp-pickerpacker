@@ -16,16 +16,18 @@ public class OrderLine {
     private int quantityPacked;
     private int quantityPicked;
     private int orderID;
+    private int pmodelID;
     private String productName;
     private String barcode;
 
-    public OrderLine(int id, String status, int quantity, int quantityPacked, int quantityPicked, int orderID, String productName, String barcode) {
+    public OrderLine(int id, String status, int quantity, int quantityPacked, int quantityPicked, int orderID, int pmodelID,String productName, String barcode) {
 
         this.status = status;
         this.quantity = quantity;
         this.quantityPacked = quantityPacked;
         this.quantityPicked = quantityPicked;
         this.orderID = orderID;
+        this.pmodelID = pmodelID;
         this.productName = productName;
         this.barcode = barcode;
     }
@@ -44,5 +46,37 @@ public class OrderLine {
 
     public int getQuantityPicked() {
         return this.quantityPicked;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public int getQuantityPacked() {
+        return quantityPacked;
+    }
+
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public int getPmodelID() {
+        return pmodelID;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public int getQuantityToPick() {
+        return this.quantity - this.quantityPicked;
+    }
+
+    public int getQuantityToPack() {
+        return this.quantityPicked - this.quantityPacked;
     }
 }

@@ -24,6 +24,7 @@ public class OrderToPackAdapter extends BaseAdapter {
         mInflater = inflater;
         orders = new ArrayList<OrderLine>();
         orders.addAll(Tabbed.getOrderline(orders, "Picked"));
+        notifyDataSetChanged();
     }
 
     @Override
@@ -59,7 +60,7 @@ public class OrderToPackAdapter extends BaseAdapter {
         OrderLine orderline = getItem(position);
         holder.product_name.setText(orderline.getName());
         holder.product_barcode.setText(orderline.getBarcode());
-        holder.product_quantity.setText("Quantity: " + orderline.getQuantityPicked());
+        holder.product_quantity.setText("Quantity: " + orderline.getQuantityToPack());
 
         return convertView;
     }

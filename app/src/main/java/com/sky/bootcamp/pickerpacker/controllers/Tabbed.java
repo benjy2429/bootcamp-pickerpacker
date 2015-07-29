@@ -18,12 +18,12 @@ import java.util.ArrayList;
  */
 public class Tabbed {
 
-    public static ArrayList<OrderLine> getOrderline(String filter){
+    public static ArrayList<OrderLine> getOrderline(String filter) {
         return DatabaseAccessLayer.getOrderLines(filter);
     }
 
-    public static ArrayList<OrderLine> getOrderline(final ArrayList<OrderLine> orders, final String filter){
-        new AsyncTask<Void, Void, Void>(){
+    public static ArrayList<OrderLine> getOrderline(final ArrayList<OrderLine> orders, final String filter) {
+        new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
                 orders.addAll(getOrderline(filter));
@@ -34,4 +34,21 @@ public class Tabbed {
         return orders;
     }
 
+    public static void getOrderLineByBarcode(final String barcode) {
+
+        new AsyncTask<Void, Void, String>() {
+
+            @Override
+            protected String doInBackground(Void... params) {
+                String errMsg = "";
+                try {
+                    OrderLine orderline = DatabaseAccessLayer.getOrderLineByBarcode(barcode);
+                } catch (SQLException e) {
+                    errMsg = "An error has occurred. Please try again later.";
+                    Log.e("Database Connection", e.getMessage());
+                }
+                return errMsg;
+            }
+        }.execute();
+    }
 }

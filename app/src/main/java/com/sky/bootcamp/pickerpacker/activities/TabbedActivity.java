@@ -22,6 +22,7 @@ import com.sky.bootcamp.pickerpacker.database.DatabaseAccessLayer;
 import com.sky.bootcamp.pickerpacker.models.OrderLine;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * Created by bca23 on 25/07/15.
@@ -35,6 +36,7 @@ public class TabbedActivity extends AppCompatActivity {
     ViewPagerAdapter adapter;
     SlidingTabLayout tabs;
     int numOfTabs = 2;
+    IntentIntegrator scanIntegrator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +79,7 @@ public class TabbedActivity extends AppCompatActivity {
                 //Intent scanIntent = new Intent(TabbedActivity.this, QrActivity.class);
                 //startActivity(scanIntent);
 
-                IntentIntegrator scanIntegrator = new IntentIntegrator(TabbedActivity.this);
+                scanIntegrator = new IntentIntegrator(TabbedActivity.this);
                 scanIntegrator.initiateScan();
             }
         });
@@ -88,15 +90,36 @@ public class TabbedActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
+//        int i=0;
+//
+//        ArrayList<String> list = new ArrayList<String>();
+//
+//
+//        System.out.println(resultCode);
+//
+//        list.add(scanningResult.getContents());
+//
+//        scanIntegrator = new IntentIntegrator(TabbedActivity.this);
+//        scanIntegrator.initiateScan();
+
         if (scanningResult != null) {
 
             String scanContent = scanningResult.getContents();
+            System.out.println(scanContent);
+            //Tabbed.getOrderline("Packed");
             //Tabbed.getOrderLineByBarcode(scanContent);
 
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
         }
+
+//        for(String s: list){
+//
+//            System.out.println(s);
+//
+//        }
+
     }
 
     @Override
