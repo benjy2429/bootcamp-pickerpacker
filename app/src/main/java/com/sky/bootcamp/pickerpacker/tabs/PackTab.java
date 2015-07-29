@@ -12,6 +12,7 @@ import com.sky.bootcamp.pickerpacker.adapters.OrderToPickAdapter;
 import com.sky.bootcamp.pickerpacker.controllers.Tabbed;
 import com.sky.bootcamp.pickerpacker.models.OrderLine;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -38,8 +39,13 @@ public class PackTab extends MasterTab {
 
         @Override
         protected ArrayList<OrderLine> doInBackground(Void... params) {
+            ArrayList<OrderLine> orders = null;
 
-            ArrayList<OrderLine> orders = Tabbed.getOrderline("Picked");
+            try {
+                orders = Tabbed.getOrderline("Picked");
+            } catch (SQLException | NullPointerException e) {
+                Log.e("Database Connection", e.getMessage());
+            }
             return orders;
         }
 

@@ -21,7 +21,7 @@ public class DatabaseAccessLayer {
 
     private static Connection conn = Database.GetConnection();
 
-    public static User getUserFromEmail(String email) throws SQLException {
+    public static User getUserFromEmail(String email) throws SQLException, NullPointerException {
         User user = null;
 
         Connection con = Database.GetConnection();
@@ -40,44 +40,40 @@ public class DatabaseAccessLayer {
         return user;
     }
 
-    public static ArrayList<OrderLine> getOrderLines(String filter) {
+    public static ArrayList<OrderLine> getOrderLines(String filter) throws SQLException, NullPointerException {
         ArrayList<OrderLine> results = new ArrayList<OrderLine>();
 
-        try {
-            Connection c = Database.GetConnection();
-            String queryString = "SELECT * FROM profiles_orderline INNER JOIN plans_pmodel ON profiles_orderline.pmodel_id_id = plans_pmodel.id INNER JOIN plans_product ON plans_pmodel.product_id_id = plans_product.id";
+        Connection c = Database.GetConnection();
+        String queryString = "SELECT * FROM profiles_orderline INNER JOIN plans_pmodel ON profiles_orderline.pmodel_id_id = plans_pmodel.id INNER JOIN plans_product ON plans_pmodel.product_id_id = plans_product.id";
 
-            if (filter.equals("Pending")) {
-                queryString += " WHERE profiles_orderline.quantity_picked < profiles_orderline.quantity";
-            } else if (filter.equals("Picked")) {
-                queryString += " WHERE profiles_orderline.quantity_packed < profiles_orderline.quantity AND profiles_orderline.quantity_packed < profiles_orderline.quantity_picked";
-            }
-            queryString += " LIMIT 10";
-            PreparedStatement ps = c.prepareStatement(queryString);
-            ResultSet rs = ps.executeQuery();
+        if (filter.equals("Pending")) {
+            queryString += " WHERE profiles_orderline.quantity_picked < profiles_orderline.quantity";
+        } else if (filter.equals("Picked")) {
+            queryString += " WHERE profiles_orderline.quantity_packed < profiles_orderline.quantity AND profiles_orderline.quantity_packed < profiles_orderline.quantity_picked";
+        }
+        queryString += " LIMIT 10";
+        PreparedStatement ps = c.prepareStatement(queryString);
+        ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String status = rs.getString("status");
-                int quantity = rs.getInt("quantity");
-                int quantityPacked = rs.getInt("quantity_packed");
-                int quantityPicked = rs.getInt("quantity_picked");
-                int orderID = rs.getInt("order_id_id");
-                int pmodelID = rs.getInt("pmodel_id_id");
-                String barcode = rs.getString("barcode");
-                String productName = rs.getString("name");
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String status = rs.getString("status");
+            int quantity = rs.getInt("quantity");
+            int quantityPacked = rs.getInt("quantity_packed");
+            int quantityPicked = rs.getInt("quantity_picked");
+            int orderID = rs.getInt("order_id_id");
+            int pmodelID = rs.getInt("pmodel_id_id");
+            String barcode = rs.getString("barcode");
+            String productName = rs.getString("name");
 
-                OrderLine orderline = new OrderLine(id, status, quantity, quantityPacked, quantityPicked, orderID, pmodelID ,productName, barcode);
-                results.add(orderline);
-            }
-        } catch (SQLException e) {
-            Log.e("OrderLine db connection", e.getMessage());
+            OrderLine orderline = new OrderLine(id, status, quantity, quantityPacked, quantityPicked, orderID, pmodelID ,productName, barcode);
+            results.add(orderline);
         }
 
         return results;
     }
 
-    public static OrderLine getOrderLineByBarcode(String barcode) throws SQLException {
+    public static OrderLine getOrderLineByBarcode(String barcode) throws SQLException, NullPointerException {
         OrderLine orderline = null;
 
         Connection con = Database.GetConnection();
@@ -102,81 +98,59 @@ public class DatabaseAccessLayer {
         return orderline;
     }
 
-    public static void updateOrderline(int quantity_picked, int quantity_packed, int id){
+    public static void updateOrderline(int quantity_picked, int quantity_packed, int id) throws SQLException, NullPointerException {
 
-        try {
-            Connection c = Database.GetConnection();
-            Statement stmt = c.createStatement();
-            String queryString = "UPDATE profiles_orderline SET quantity_picked=?, quantity_packed=? WHERE id=?;";
-            PreparedStatement ps = c.prepareStatement(queryString);
-            ps.setInt(1, quantity_picked);
-            ps.setInt(2, quantity_packed);
-            ps.setInt(3, id);
+        Connection c = Database.GetConnection();
+        Statement stmt = c.createStatement();
+        String queryString = "UPDATE profiles_orderline SET quantity_picked=?, quantity_packed=? WHERE id=?;";
+        PreparedStatement ps = c.prepareStatement(queryString);
+        ps.setInt(1, quantity_picked);
+        ps.setInt(2, quantity_packed);
+        ps.setInt(3, id);
 
-            ps.execute();
-
-        } catch (SQLException e) {
-            System.err.print(e);
-        }
+        ps.execute();
 
     }
 
-    public static void updateOrder(String status, int order_id){
+    public static void updateOrder(String status, int order_id) throws SQLException, NullPointerException {
 
-        try {
-            Connection c = Database.GetConnection();
-            Statement stmt = c.createStatement();
-            String queryString = "UPDATE profiles_order SET status=? WHERE id=?;";
-            PreparedStatement ps = c.prepareStatement(queryString);
-            ps.setString(1, status);
-            ps.setInt(2, order_id);
-            ps.execute();
-
-        } catch (SQLException e) {
-            System.err.print(e);
-        }
+        Connection c = Database.GetConnection();
+        Statement stmt = c.createStatement();
+        String queryString = "UPDATE profiles_order SET status=? WHERE id=?;";
+        PreparedStatement ps = c.prepareStatement(queryString);
+        ps.setString(1, status);
+        ps.setInt(2, order_id);
+        ps.execute();
 
     }
 
-    public static int getPModelQuantity(int pmodel_id){
+    public static int getPModelQuantity(int pmodel_id) throws SQLException, NullPointerException {
 
-        try {
-            Connection c = Database.GetConnection();
-            Statement stmt = c.createStatement();
-            String queryString = "SELECT * FROM plans_pmodel WHERE id=?;";
-            PreparedStatement ps = c.prepareStatement(queryString);
-            ps.setInt(1, pmodel_id);
-            ResultSet rs = ps.executeQuery();
+        Connection c = Database.GetConnection();
+        Statement stmt = c.createStatement();
+        String queryString = "SELECT * FROM plans_pmodel WHERE id=?;";
+        PreparedStatement ps = c.prepareStatement(queryString);
+        ps.setInt(1, pmodel_id);
+        ResultSet rs = ps.executeQuery();
 
-            int quantity = 0;
+        int quantity = 0;
 
-            while (rs.next()) {
-                 quantity = rs.getInt("quantity");
-            }
-
-            return quantity;
-
-        } catch (SQLException e) {
-            System.err.print(e);
+        while (rs.next()) {
+             quantity = rs.getInt("quantity");
         }
 
-        return 0;
+        return quantity;
     }
 
-    public static void updatePModel(int quantity, int pmodel_id){
+    public static void updatePModel(int quantity, int pmodel_id) throws SQLException, NullPointerException {
 
-        try {
-            Connection c = Database.GetConnection();
-            Statement stmt = c.createStatement();
-            String queryString = "UPDATE plans_pmodel SET quantity=? WHERE id=?;";
-            PreparedStatement ps = c.prepareStatement(queryString);
-            ps.setInt(1, quantity);
-            ps.setInt(2, pmodel_id);
-            ps.execute();
-
-        } catch (SQLException e) {
-            System.err.print(e);
-        }
+        Connection c = Database.GetConnection();
+        Statement stmt = c.createStatement();
+        String queryString = "UPDATE plans_pmodel SET quantity=? WHERE id=?;";
+        PreparedStatement ps = c.prepareStatement(queryString);
+        ps.setInt(1, quantity);
+        ps.setInt(2, pmodel_id);
+        ps.execute();
 
     }
 }

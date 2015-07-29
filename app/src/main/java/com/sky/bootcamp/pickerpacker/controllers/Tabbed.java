@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutionException;
  */
 public class Tabbed {
 
-    public static ArrayList<OrderLine> getOrderline(String filter) {
+    public static ArrayList<OrderLine> getOrderline(String filter) throws SQLException, NullPointerException {
         return DatabaseAccessLayer.getOrderLines(filter);
     }
 
@@ -27,7 +27,11 @@ public class Tabbed {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                orders.addAll(getOrderline(filter));
+                try {
+                    orders.addAll(getOrderline(filter));
+                } catch (SQLException | NullPointerException e) {
+                    Log.e("Database Connection", e.getMessage());
+                }
                 return null;
             }
         }.execute();
@@ -48,8 +52,7 @@ public class Tabbed {
                 try {
                     OrderLine orderline = DatabaseAccessLayer.getOrderLineByBarcode(barcode);
                     return orderline;
-                } catch (SQLException e) {
-                    errMsg = "An error has occurred. Please try again later.";
+                } catch (SQLException | NullPointerException e) {
                     Log.e("Database Connection", e.getMessage());
                 }
                 return null;
@@ -59,10 +62,8 @@ public class Tabbed {
         try {
             mOrderline = task.get();
             return mOrderline;
-        } catch (InterruptedException e) {
-            System.err.println("All the errors");
-        } catch (ExecutionException e) {
-            System.err.println("All the errors and some more");
+        } catch (InterruptedException | ExecutionException e) {
+            Log.e("Database Connection", e.getMessage());
         }
 
         return null;
@@ -74,7 +75,11 @@ public class Tabbed {
 
             @Override
             protected Void doInBackground(Void... params) {
-                DatabaseAccessLayer.updateOrderline(quantity_picked, quantity_packed, id);
+                try {
+                    DatabaseAccessLayer.updateOrderline(quantity_picked, quantity_packed, id);
+                } catch (SQLException | NullPointerException e) {
+                    Log.e("Database Connection", e.getMessage());
+                }
                 return null;
             }
         }.execute();
@@ -85,7 +90,11 @@ public class Tabbed {
 
             @Override
             protected Void doInBackground(Void... params) {
-                DatabaseAccessLayer.updateOrder(status, order_id);
+                try {
+                    DatabaseAccessLayer.updateOrder(status, order_id);
+                } catch (SQLException | NullPointerException e) {
+                    Log.e("Database Connection", e.getMessage());
+                }
                 return null;
             }
         }.execute();
@@ -95,7 +104,12 @@ public class Tabbed {
         AsyncTask<Void, Void, Integer> task = new AsyncTask<Void, Void, Integer>() {
             @Override
             protected Integer doInBackground(Void... params) {
-                int quantity = DatabaseAccessLayer.getPModelQuantity(id);
+                int quantity = 0;
+                try {
+                    quantity = DatabaseAccessLayer.getPModelQuantity(id);
+                } catch (SQLException | NullPointerException e) {
+                    Log.e("Database Connection", e.getMessage());
+                }
                 return quantity;
             }
         }.execute();
@@ -104,10 +118,8 @@ public class Tabbed {
             System.out.println(task.get());
             int mQuantity = task.get();
             return mQuantity;
-        } catch (InterruptedException e) {
-            System.err.print(e);
-        } catch (ExecutionException e) {
-            System.err.print(e);
+        } catch (InterruptedException | ExecutionException e) {
+            Log.e("Database Connection", e.getMessage());
         }
 
         return 0;
@@ -118,7 +130,11 @@ public class Tabbed {
 
             @Override
             protected Void doInBackground(Void... params) {
-                DatabaseAccessLayer.updatePModel(quantity,pmodel_id);
+                try {
+                    DatabaseAccessLayer.updatePModel(quantity, pmodel_id);
+                } catch (SQLException | NullPointerException e) {
+                    Log.e("Database Connection", e.getMessage());
+                }
                 return null;
             }
         }.execute();
