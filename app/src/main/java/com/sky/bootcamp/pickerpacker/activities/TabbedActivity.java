@@ -91,7 +91,7 @@ public class TabbedActivity extends AppCompatActivity {
         if (scanningResult != null) {
 
             String scanContent = scanningResult.getContents();
-            Tabbed.getOrderLineByBarcode(scanContent);
+            //Tabbed.getOrderLineByBarcode(scanContent);
 
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "No scan data received!", Toast.LENGTH_SHORT);

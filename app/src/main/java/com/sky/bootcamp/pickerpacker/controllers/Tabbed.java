@@ -34,24 +34,4 @@ public class Tabbed {
         return orders;
     }
 
-    public static void getOrderLineByBarcode(final String barcode) {
-
-        new AsyncTask<Void, Void, String>() {
-
-            @Override
-            protected String doInBackground(Void... params) {
-                String errMsg = "";
-                try {
-                    OrderLine orderline = DatabaseAccessLayer.getOrderLineByBarcode(barcode);
-                    System.out.println(orderline.getName());
-                } catch (SQLException e) {
-                    errMsg = "An error has occurred. Please try again later.";
-                    Log.e("Database Connection", e.getMessage());
-                }
-                return errMsg;
-            }
-
-        }.execute();
-    }
-
 }
