@@ -99,4 +99,45 @@ public class DatabaseAccessLayer {
         return orderline;
     }
 
+    public static void updateOrderline(int quantity, int quantity_picked, int quantity_packed, int id){
+
+        try {
+
+            Connection c = Database.GetConnection();
+            Statement stmt = c.createStatement();
+            String queryString = "UPDATE profiles_orderline SET quantity=?, quantity_picked=?, quantity_packed=? WHERE id=?;";
+            PreparedStatement ps = c.prepareStatement(queryString);
+            ps.setInt(1, quantity);
+            ps.setInt(2, quantity_picked);
+            ps.setInt(3, quantity_packed);
+            ps.setInt(4, id);
+
+            ps.execute();
+
+        } catch (SQLException e) {
+            System.err.print(e);
+        }
+
+    }
+
+    public static void updateOrder(int quantity, int order_id){
+
+        try {
+            Connection c = Database.GetConnection();
+            Statement stmt = c.createStatement();
+            String queryString = "UPDATE profiles_order SET quantity=? WHERE id=?;";
+            PreparedStatement ps = c.prepareStatement(queryString);
+            ps.setInt(1, quantity);
+            ps.setInt(2, order_id);
+            ps.execute();
+
+        } catch (SQLException e) {
+            System.err.print(e);
+        }
+
+    }
+
+
+
+
 }
