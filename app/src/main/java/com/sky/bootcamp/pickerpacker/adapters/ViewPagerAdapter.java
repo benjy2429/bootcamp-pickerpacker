@@ -16,7 +16,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     int numOfTabs; // Store the number of tabs, this will also be passed when the ViewPagerAdapter is created
     Context context;
-
+    PickTab tab1;
+    PackTab tab2;
 
     // Build a Constructor and assign the passed Values to appropriate values in the class
     public ViewPagerAdapter(FragmentManager fm, Context context, int mNumbOfTabsumb) {
@@ -33,11 +34,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
         if (position == 0) // if the position is 0 we are returning the First tab
         {
-            PickTab tab1 = new PickTab();
+            tab1 = new PickTab();
             return tab1;
         } else             // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
         {
-            PackTab tab2 = new PackTab();
+            tab2 = new PackTab();
             return tab2;
         }
 
@@ -51,6 +52,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         if (position == 0) {
             return context.getString(R.string.title_section1);
         } else {
+
             return context.getString(R.string.title_section2);
         }
     }
@@ -60,5 +62,13 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return numOfTabs;
+    }
+
+    public PickTab getTab1() {
+        return tab1;
+    }
+
+    public PackTab getTab2() {
+        return tab2;
     }
 }

@@ -46,7 +46,6 @@ public class OrderToPickAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.row_orderline, null);
             holder = new ViewHolder();

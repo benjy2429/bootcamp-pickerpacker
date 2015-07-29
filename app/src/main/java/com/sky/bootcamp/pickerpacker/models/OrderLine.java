@@ -21,7 +21,7 @@ public class OrderLine {
     private String barcode;
 
     public OrderLine(int id, String status, int quantity, int quantityPacked, int quantityPicked, int orderID, int pmodelID,String productName, String barcode) {
-
+        this.id = id;
         this.status = status;
         this.quantity = quantity;
         this.quantityPacked = quantityPacked;
@@ -78,5 +78,9 @@ public class OrderLine {
 
     public int getQuantityToPack() {
         return this.quantityPicked - this.quantityPacked;
+    }
+
+    public void setQuantityPacked(int i){
+        this.quantityPacked = i;
     }
 }

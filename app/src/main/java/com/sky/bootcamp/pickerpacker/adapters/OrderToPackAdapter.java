@@ -24,7 +24,6 @@ public class OrderToPackAdapter extends BaseAdapter {
         mInflater = inflater;
         orders = new ArrayList<OrderLine>();
         orders.addAll(Tabbed.getOrderline(orders, "Picked"));
-        notifyDataSetChanged();
     }
 
     @Override

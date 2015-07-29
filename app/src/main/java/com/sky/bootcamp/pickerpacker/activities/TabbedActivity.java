@@ -37,6 +37,7 @@ public class TabbedActivity extends AppCompatActivity {
     SlidingTabLayout tabs;
     int numOfTabs = 2;
     IntentIntegrator scanIntegrator;
+    int selectedTab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,25 @@ public class TabbedActivity extends AppCompatActivity {
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(adapter);
 
+
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                selectedTab = position;
+                pager.setCurrentItem(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
+
+
         // Assiging the Sliding Tab Layout View
         tabs = (SlidingTabLayout) findViewById(R.id.tabs);
         tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
@@ -76,50 +96,56 @@ public class TabbedActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent scanIntent = new Intent(TabbedActivity.this, QrActivity.class);
-                //startActivity(scanIntent);
 
                 scanIntegrator = new IntentIntegrator(TabbedActivity.this);
                 scanIntegrator.initiateScan();
             }
         });
-
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
-//        int i=0;
-//
-//        ArrayList<String> list = new ArrayList<String>();
-//
-//
-//        System.out.println(resultCode);
-//
-//        list.add(scanningResult.getContents());
-//
-//        scanIntegrator = new IntentIntegrator(TabbedActivity.this);
-//        scanIntegrator.initiateScan();
+
+        adapter.notifyDataSetChanged();
 
         if (scanningResult != null) {
 
             String scanContent = scanningResult.getContents();
-            System.out.println(scanContent);
-            //Tabbed.getOrderline("Packed");
-            //Tabbed.getOrderLineByBarcode(scanContent);
+
+            OrderLine order = Tabbed.getOrderLineByBarcode(scanContent);
+
+            switch(selectedTab){
+
+                case 0:
+                    Tabbed.updateOrderline(order.getQuantityPicked()+1,order.getQuantityPacked(),order.getId());
+                    adapter.getTab1().initiateRefresh();
+                    adapter.getTab2().initiateRefresh();
+                    break;
+
+                case 1:
+                    Tabbed.updateOrderline(order.getQuantityPicked(), order.getQuantityPacked() + 1, order.getId());
+                    adapter.getTab1().initiateRefresh();
+                    adapter.getTab2().initiateRefresh();
+                    break;
+                default:
+                    break;
+
+            }
+
+            OrderLine updatedOrder = Tabbed.getOrderLineByBarcode(scanContent);
+            int stockLevel = Tabbed.getStockLevel(updatedOrder.getPmodelID());
+
+            if (updatedOrder.getQuantityToPack() == 0){
+                Tabbed.updateOrder("Dispatched", updatedOrder.getOrderID());
+                Tabbed.updatePModel(500-1,updatedOrder.getPmodelID());
+            }
 
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "No scan data received!", Toast.LENGTH_SHORT);
             toast.show();
         }
-
-//        for(String s: list){
-//
-//            System.out.println(s);
-//
-//        }
-
     }
 
     @Override

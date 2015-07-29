@@ -30,7 +30,7 @@ public class PackTab extends MasterTab {
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    protected void initiateRefresh() {
+    public void initiateRefresh() {
         new RefreshListTask().execute();
     }
 

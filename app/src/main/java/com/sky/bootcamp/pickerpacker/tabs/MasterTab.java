@@ -67,7 +67,7 @@ public class MasterTab extends ListFragment {
         }
     }
 
-    protected void initiateRefresh() {
+    public void initiateRefresh() {
 
     }
 

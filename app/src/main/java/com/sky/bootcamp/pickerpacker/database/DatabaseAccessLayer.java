@@ -67,8 +67,6 @@ public class DatabaseAccessLayer {
                 String barcode = rs.getString("barcode");
                 String productName = rs.getString("name");
 
-                System.out.println(status);
-
                 OrderLine orderline = new OrderLine(id, status, quantity, quantityPacked, quantityPicked, orderID, pmodelID ,productName, barcode);
                 results.add(orderline);
             }
@@ -104,18 +102,16 @@ public class DatabaseAccessLayer {
         return orderline;
     }
 
-    public static void updateOrderline(int quantity, int quantity_picked, int quantity_packed, int id){
+    public static void updateOrderline(int quantity_picked, int quantity_packed, int id){
 
         try {
-
             Connection c = Database.GetConnection();
             Statement stmt = c.createStatement();
-            String queryString = "UPDATE profiles_orderline SET quantity=?, quantity_picked=?, quantity_packed=? WHERE id=?;";
+            String queryString = "UPDATE profiles_orderline SET quantity_picked=?, quantity_packed=? WHERE id=?;";
             PreparedStatement ps = c.prepareStatement(queryString);
-            ps.setInt(1, quantity);
-            ps.setInt(2, quantity_picked);
-            ps.setInt(3, quantity_packed);
-            ps.setInt(4, id);
+            ps.setInt(1, quantity_picked);
+            ps.setInt(2, quantity_packed);
+            ps.setInt(3, id);
 
             ps.execute();
 
@@ -140,6 +136,31 @@ public class DatabaseAccessLayer {
             System.err.print(e);
         }
 
+    }
+
+    public static int getPModelQuantity(int pmodel_id){
+
+        try {
+            Connection c = Database.GetConnection();
+            Statement stmt = c.createStatement();
+            String queryString = "SELECT * FROM plans_pmodel WHERE id=?;";
+            PreparedStatement ps = c.prepareStatement(queryString);
+            ps.setInt(1, pmodel_id);
+            ResultSet rs = ps.executeQuery();
+
+            int quantity = 0;
+
+            while (rs.next()) {
+                 quantity = rs.getInt("quantity");
+            }
+
+            return quantity;
+
+        } catch (SQLException e) {
+            System.err.print(e);
+        }
+
+        return 0;
     }
 
     public static void updatePModel(int quantity, int pmodel_id){
