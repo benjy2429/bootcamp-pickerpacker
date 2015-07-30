@@ -177,6 +177,6 @@ public class TabbedActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // Disable the back button
+        //Disable back button
     }
 }
