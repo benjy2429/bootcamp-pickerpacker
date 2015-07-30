@@ -52,7 +52,7 @@ public class TabbedActivity extends AppCompatActivity {
 
 
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter =  new ViewPagerAdapter(getSupportFragmentManager(), this, numOfTabs);
+        adapter = new ViewPagerAdapter(getSupportFragmentManager(), this, numOfTabs);
 
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) findViewById(R.id.pager);
@@ -116,30 +116,36 @@ public class TabbedActivity extends AppCompatActivity {
 
             OrderLine order = Tabbed.getOrderLineByBarcode(scanContent);
 
-            switch(selectedTab){
+            if (order != null) {
+                switch (selectedTab) {
 
-                case 0:
-                    Tabbed.updateOrderline(order.getQuantityPicked()+1,order.getQuantityPacked(),order.getId());
-                    adapter.getTab1().initiateRefresh();
-                    adapter.getTab2().initiateRefresh();
-                    break;
+                    case 0:
+                        Tabbed.updateOrderline(order.getQuantityPicked() + 1, order.getQuantityPacked(), order.getId());
+                        adapter.getTab1().initiateRefresh();
+                        adapter.getTab2().initiateRefresh();
+                        break;
 
-                case 1:
-                    Tabbed.updateOrderline(order.getQuantityPicked(), order.getQuantityPacked() + 1, order.getId());
-                    adapter.getTab1().initiateRefresh();
-                    adapter.getTab2().initiateRefresh();
-                    break;
-                default:
-                    break;
+                    case 1:
+                        Tabbed.updateOrderline(order.getQuantityPicked(), order.getQuantityPacked() + 1, order.getId());
+                        adapter.getTab1().initiateRefresh();
+                        adapter.getTab2().initiateRefresh();
+                        break;
+                    default:
+                        break;
 
-            }
+                }
 
-            OrderLine updatedOrder = Tabbed.getOrderLineByBarcode(scanContent);
-            int stockLevel = Tabbed.getStockLevel(updatedOrder.getPmodelID());
+                OrderLine updatedOrder = Tabbed.getOrderLineByBarcode(scanContent);
+                int stockLevel = Tabbed.getStockLevel(updatedOrder.getPmodelID());
 
-            if (updatedOrder.getQuantityToPack() == 0){
-                Tabbed.updateOrder("Dispatched", updatedOrder.getOrderID());
-                Tabbed.updatePModel(500-1,updatedOrder.getPmodelID());
+                if (updatedOrder.getQuantityToPack() == 0) {
+                    Tabbed.updateOrder("Dispatched", updatedOrder.getOrderID());
+                    Tabbed.updatePModel(500 - 1, updatedOrder.getPmodelID());
+                }
+
+            }else{
+                Toast toast = Toast.makeText(getApplicationContext(), "No scan data received!", Toast.LENGTH_SHORT);
+                toast.show();
             }
 
         } else {
@@ -171,6 +177,6 @@ public class TabbedActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // Disable the back button
+        //Disable back button
     }
 }
